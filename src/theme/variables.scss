@@ -34,11 +34,11 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
+  primary:    #05b459,
+  secondary:  #05b459,
   danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+  light:      #1A1A1C,
+  dark:       rgb(13, 13, 14)
 );
 
 
@@ -70,8 +70,8 @@ $colors: (
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
 
+@import "ionic.theme.dark";
 
 // Ionicons
 // --------------------------------------------------
@@ -83,6 +83,10 @@ $colors: (
 
 // Fonts
 // --------------------------------------------------
+$app-background: linear-gradient(45 deg, color($colors, light) 0%, color($colors, dark) 100%);
 
 @import "roboto";
 @import "noto-sans";
+ion-content {
+  background: $app-background;
+}

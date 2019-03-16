@@ -2,10 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { PlayerprofilePage } from '../pages/playerprofile/playerprofile';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-
+import { OrientationPage } from '../pages/orientation/orientation';
+import { VelocityPage } from '../pages/velocity/velocity';
+import { AcclerationPage } from '../pages/accleration/accleration';
+import { ForcePage } from '../pages/force/force';
 @Component({
   templateUrl: 'app.html'
 })
@@ -21,8 +23,12 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Connect to Server', component: HomePage },
+      { title: 'Player Profile', component: PlayerprofilePage },
+      { title: 'Accleration', component: AcclerationPage },
+      { title: 'Velocity', component: VelocityPage },
+      { title: 'Orientation', component: OrientationPage },
+      { title: 'Force', component: ForcePage },
     ];
 
   }
