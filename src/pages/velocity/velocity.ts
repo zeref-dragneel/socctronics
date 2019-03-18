@@ -18,8 +18,13 @@ import { Chart } from 'chart.js';
 export class VelocityPage {
   @ViewChild('lineCanvas') lineCanvas;
   posts:any;
+  lastpost:any;
   lineChart: any;
   arrayList:any;
+  yellowcard:boolean= false;
+  redcard:boolean = false;
+  sno:string[];
+  val:number[];
   constructor(public navCtrl: NavController, public navParams: NavParams,private http:Http) {
     setInterval(()=>{
       //   this.sales();
@@ -32,23 +37,63 @@ export class VelocityPage {
     this.http.get('http://127.0.0.1:8002/wapp/rest/view_last5data').map(res => res.json()).subscribe(data => {
 
   this.posts=data;
+  try{
+  this.lastpost=this.posts[0].val;
+  console.log(this.lastpost);
+  }
+  catch{
+    this.lastpost = "";
+    console.log(this.lastpost);
+  }
+// console.log(this.posts.length);
 //   console.log(this.posts[0].sno);
-  let sno =this.posts.map(person => person.data_time).reverse(); 
-  let val =this.posts.map(person => person.val).reverse(); 
-//   console.log(sno); 
+try{
+  this.sno =this.posts.map(person => person.data_time).reverse(); 
+  this.val =this.posts.map(person => person.val).reverse(); 
+}
+catch{
+  this.sno = null;
+  this.val =  null;
+}
+  try{
+  if (this.val[4]>10 && this.val[4]<15){
+    // console.log("yellow card");
+    this.yellowcard = true;
+    this.redcard = false;
+  }
+  else if(this.val[4]>15){
+    // console.log("red card");
+    this.yellowcard = false;
+    this.redcard = true;
+  }
+  else{
+
+      this.yellowcard = false;
+      this.redcard = false;
+    
+  }
+}
+catch{
+  this.yellowcard = false;
+  this.redcard = false;
+}
+//   console.log(this.val[4]);
+// console.log("yellow card " + this.yellowcard);
+// console.log("red card " + this.redcard);
+    
 
 
     // });
-
+    
 
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
 
       type: 'line',
       data: {
-          labels:sno,
+          labels:this.sno,
           datasets: [{
             label: "velocity",
-              data:val,
+              data:this.val,
               borderColor: "#05b459",
               fill: true,
               backgroundColor:"#05b45940",
@@ -57,6 +102,11 @@ export class VelocityPage {
   
       },
       options: {
+        animation: {
+          duration : 1000,
+          easing:'easeInOutQuad'
+
+      },
         layout: {
           padding: {
               left:0,
