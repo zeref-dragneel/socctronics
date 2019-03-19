@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Chart } from 'chart.js';
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the VelocityPage page.
  *
@@ -25,25 +26,31 @@ export class VelocityPage {
   redcard:boolean = false;
   sno:string[];
   val:number[];
-  constructor(public navCtrl: NavController, public navParams: NavParams,private http:Http) {
+  ipaddress:string;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private http:Http,public storage: Storage) {
     setInterval(()=>{
       //   this.sales();
       this.ionViewDidLoad();
       },5000);
+      
   }
-
   ionViewDidLoad(){
 
-    this.http.get('http://127.0.0.1:8002/wapp/rest/view_last5data').map(res => res.json()).subscribe(data => {
+    this.storage.get('name').then((val) => {
+      this.ipaddress = val;
+      // console.log(this.ipaddress);
+    });
+    if(this.ipaddress!=undefined){
+    this.http.get('http://'+this.ipaddress+'/wapp/rest/view_last5data').map(res => res.json()).subscribe(data => {
 
   this.posts=data;
   try{
   this.lastpost=this.posts[0].val;
-  console.log(this.lastpost);
+  // console.log(this.lastpost);
   }
   catch{
     this.lastpost = "";
-    console.log(this.lastpost);
+    // console.log(this.lastpost);
   }
 // console.log(this.posts.length);
 //   console.log(this.posts[0].sno);
@@ -138,6 +145,7 @@ catch{
   
   
 });
+    }
 
 
 }

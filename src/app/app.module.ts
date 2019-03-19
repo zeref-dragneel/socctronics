@@ -11,7 +11,7 @@ import { AcclerationPage } from '../pages/accleration/accleration';
 import { ForcePage } from '../pages/force/force';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { IonicStorageModule } from '@ionic/storage';  
 @NgModule({
   declarations: [
     MyApp,
@@ -20,12 +20,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     PlayerprofilePage,
     VelocityPage,
     AcclerationPage,
-    ForcePage
+    ForcePage,
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

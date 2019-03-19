@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the OrientationPage page.
  *
@@ -17,7 +17,8 @@ import 'rxjs/add/operator/map';
 })
 export class OrientationPage {
   posts:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private http:Http) {
+  ipaddress:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private http:Http,public storage: Storage) {
     setInterval(()=>{
       //   this.sales();
       this.sales();
@@ -28,11 +29,22 @@ export class OrientationPage {
   }
 
   sales(){
-    this.http.get('http://127.0.0.1:8002/wapp/rest/view_last5data').map(res => res.json()).subscribe(data => {
+    this.storage.get('name').then((val) => {
+      this.ipaddress = val;
+      // console.log(this.ipaddress);
+    });
+    try{
+      if(this.ipaddress!=undefined){
+    this.http.get('http://'+this.ipaddress+'/wapp/rest/view_last5data').map(res => res.json()).subscribe(data => {
 
   this.posts=data;
 
     });
+  }
+  }
+  catch{
+    this.posts=null;
+  }
     
   }
  
