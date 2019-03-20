@@ -68,7 +68,7 @@ catch{
     this.yellowcard = true;
     this.redcard = false;
   }
-  else if(this.val[4]>15){
+  else if(this.val[4]>=15){
     // console.log("red card");
     this.yellowcard = false;
     this.redcard = true;
